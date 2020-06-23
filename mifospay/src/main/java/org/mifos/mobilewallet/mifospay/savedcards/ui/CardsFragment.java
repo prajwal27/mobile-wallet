@@ -3,6 +3,7 @@ package org.mifos.mobilewallet.mifospay.savedcards.ui;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.chip.Chip;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.mifos.mobilewallet.core.data.fineract.entity.savedcards.Card;
@@ -60,8 +62,14 @@ public class CardsFragment extends BaseFragment implements CardsContract.CardsVi
     @BindView(R.id.rv_cards)
     RecyclerView rvCards;
 
+    @BindView(R.id.pb_cards)
+    ProgressBar pbCards;
+
     @Inject
     CardsAdapter mCardsAdapter;
+
+    @BindView(R.id.btn_add_card)
+    Chip addCard;
 
     View rootView;
 
@@ -97,6 +105,7 @@ public class CardsFragment extends BaseFragment implements CardsContract.CardsVi
         getSwipeRefreshLayout().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                getSwipeRefreshLayout().setRefreshing(false);
                 mCardsPresenter.fetchSavedCards();
             }
         });
@@ -105,6 +114,7 @@ public class CardsFragment extends BaseFragment implements CardsContract.CardsVi
     private void showEmptyStateView() {
         if (getActivity() != null) {
             vStateView.setVisibility(View.VISIBLE);
+            pbCards.setVisibility(View.GONE);
             Resources res = getResources();
             ivTransactionsStateIcon
                     .setImageDrawable(res.getDrawable(R.drawable.ic_cards));
@@ -114,6 +124,32 @@ public class CardsFragment extends BaseFragment implements CardsContract.CardsVi
                     .setText(res.getString(R.string.empty_no_cards_subtitle));
         }
     }
+
+    @Override
+    public void showErrorStateView(int drawable, int title, int subtitle) {
+        rvCards.setVisibility(View.GONE);
+        pbCards.setVisibility(View.GONE);
+        hideSwipeProgress();
+        vStateView.setVisibility(View.VISIBLE);
+        if (getActivity() != null) {
+            Resources res = getResources();
+            ivTransactionsStateIcon
+                    .setImageDrawable(res.getDrawable(drawable));
+            tvTransactionsStateTitle
+                    .setText(res.getString(title));
+            tvTransactionsStateSubtitle
+                    .setText(res.getString(subtitle));
+        }
+    }
+
+    @Override
+    public void showFetchingProcess() {
+        vStateView.setVisibility(View.GONE);
+        rvCards.setVisibility(View.GONE);
+        pbCards.setVisibility(View.VISIBLE);
+        addCard.setVisibility(View.GONE);
+    }
+
 
     private void hideEmptyStateView() {
         vStateView.setVisibility(View.GONE);
@@ -206,7 +242,7 @@ public class CardsFragment extends BaseFragment implements CardsContract.CardsVi
      */
     @Override
     public void showSavedCards(List<Card> cards) {
-
+        pbCards.setVisibility(View.GONE);
         if (cards == null || cards.size() == 0) {
             showEmptyStateView();
             rvCards.setVisibility(View.GONE);
@@ -217,6 +253,7 @@ public class CardsFragment extends BaseFragment implements CardsContract.CardsVi
         }
         mCardsAdapter.setCards(cards);
         hideSwipeProgress();
+        addCard.setVisibility(View.VISIBLE);
     }
 
     /**

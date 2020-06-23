@@ -1,4 +1,4 @@
-<img height='175' src="https://user-images.githubusercontent.com/37406965/51083189-d5dc3a80-173b-11e9-8ca0-28015e0893ac.png" align="left" hspace="1" vspace="1">
+<img height='175' src="https://user-images.githubusercontent.com/44283521/78983673-455cf780-7b42-11ea-849e-ecd2009dd562.png" align="left" hspace="1" vspace="1">
 
 # Mobile Wallet
 
@@ -17,6 +17,9 @@ that can be used as a dependency in any other wallet based project. It is develo
   <img src="https://user-images.githubusercontent.com/37406965/51085243-86f2cd00-175c-11e9-9f5e-8a2324cfda4a.jpg" width="288" height="500" />
   <img src="https://user-images.githubusercontent.com/37406965/51085245-8823fa00-175c-11e9-949a-c5292037b970.jpg" width="288" height="500" /> 
   <img src="https://user-images.githubusercontent.com/37406965/51085246-89552700-175c-11e9-9a5b-5a85ecb5bfae.jpg" width="288" height="500" />
+</p>
+<p align="center">
+  Click <a href= "https://github.com/openMF/mobile-wallet/blob/dev/Screenshot.md">here </a> for more screenshots
 </p>
 
 ## How to Contribute
